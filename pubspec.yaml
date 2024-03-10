@@ -1,6 +1,10 @@
 name: routemaster_conductor
 description: A file based route map builder for routemaster based on Next.js
 version: 1.0.0+1
+homepage: https://github.com/sfx1909/routemaster_conductor
+repository: https://github.com/sfx1909/routemaster_conductor
+issue_tracker: https://github.com/sfx1909/routemaster_conductor/issues
+topics: [navigation, routemaster]
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
