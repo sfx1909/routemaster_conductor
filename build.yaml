@@ -1,0 +1,20 @@
+targets:
+  $default:
+    builders:
+      routemaster_conductor:
+        generate_for:
+          exclude:
+            - test
+            - example
+        enabled: true
+
+builders:
+  routemaster_conductor:
+    import: "package:routemaster_conductor/builders.dart"
+    builder_factories:
+      - pageRoutes
+    build_extensions:
+      .dart:
+        - .r.dart
+    auto_apply: dependents
+    build_to: source

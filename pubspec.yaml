@@ -1,0 +1,30 @@
+name: routemaster_conductor
+description: A file based route map builder for routemaster based on Next.js
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  analyzer: ^6.4.1
+  build: ^2.4.1
+  built_collection: ^5.1.1
+  code_builder: ^4.10.0
+  collection: ^1.18.0
+  dart_style: ^2.3.6
+  flutter:
+    sdk: flutter
+  glob: ^2.1.2
+  meta: ^1.11.0
+  path: ^1.9.0
+  recase: ^4.1.0
+  source_gen: ^1.5.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  build_config: ^1.1.1
+  build_runner: ^2.4.8
+
