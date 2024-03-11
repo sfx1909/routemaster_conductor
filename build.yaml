@@ -1,13 +1,3 @@
-targets:
-  $default:
-    builders:
-      routemaster_conductor:
-        generate_for:
-          exclude:
-            - test
-            - example
-        enabled: true
-
 builders:
   routemaster_conductor:
     import: "package:routemaster_conductor/builders.dart"
@@ -15,6 +5,14 @@ builders:
       - pageRoutes
     build_extensions:
       .dart:
-        - .r.dart
+        - .g.dart
     auto_apply: dependents
     build_to: source
+    defaults:
+      dev_options:
+      release_options:
+        framework: routemaster
+        outputDir: lib/src
+      options:
+        framework: routemaster
+        outputDir: lib/src

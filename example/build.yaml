@@ -1,0 +1,7 @@
+#targets:
+#  $default:
+#    builders:
+#      routemaster_conductor:
+#        options:
+#          framework: routemaster
+#          outputDir: lib/src
