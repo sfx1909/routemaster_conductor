@@ -10,6 +10,28 @@ boilerplate.
 __We don't depend on routemaster we just provide first party support__, the filesystem paths are generated and assigned
 to helper classes we also generate that provide a named route functionality.
 
+## Table of Contents
+<!-- TOC -->
+* [Routemaster Conductor](#routemaster-conductor)
+  * [Table of Contents](#table-of-contents)
+  * [Motivation](#motivation)
+  * [Getting started](#getting-started)
+    * [Install](#install)
+    * [Project structure](#project-structure)
+      * [Folders](#folders)
+      * [Files](#files)
+      * [Example](#example)
+  * [Configuration](#configuration)
+  * [Features](#features)
+    * [Partial support](#partial-support)
+  * [Dynamic routes](#dynamic-routes)
+  * [404/Unknown routes](#404unknown-routes)
+  * [Templates](#templates)
+    * [Routemaster](#routemaster)
+      * [template.dart](#templatedart)
+      * [404.dart](#404dart)
+<!-- TOC -->
+
 ## Motivation
 
 Thought it was an interesting concept and my paths are generally the same as the folder structure; and there are enough
