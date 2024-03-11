@@ -1,5 +1,7 @@
 # Routemaster Conductor
 
+[![pub](https://img.shields.io/pub/v/routemaster_conductor.svg)](https://pub.dev/packages/routemaster_conductor)
+
 Routemaster Conductor was built to mimic how [Next.js](https://nextjs.org/docs/app/building-your-application/routing)
 does its routing, with routemaster's path param, nested routes and
 route map switching. The main goal is to maintain the interface that Routemaster provides and help with generating the
@@ -30,7 +32,7 @@ flutter pub add dev:build_runner dev:routemaster_conductor routemaster
 ### Project structure
 
 We check for pages in `.../pages/...` and `.../page/...`, we don't really care where you put them in your project. The
-routes will get placed in `lib/src/routes.g.dart` though. (_Might allow configuration in later versions_)
+routes will get placed in `lib/src/routes.g.dart` though. (_See configuration for override option_)
 
 #### Folders
 
@@ -62,12 +64,15 @@ targets:
     builders:
       routemaster_conductor:
         options:
-          # Removes route metadata doc comments. Default: true
           routeMetaComment: true
-          # Generates routemaster route maps and import routemaster. Default: true
-          # Setting to false will remove routemaster dependency
-          buildRouteMap: true 
+          framework: routemaster
 ```
+
+| Option             | Description                                                                                           | Default         | Allowed values                          | Nullable |
+|--------------------|-------------------------------------------------------------------------------------------------------|-----------------|-----------------------------------------|----------|
+| `routeMetaComment` | Disables generating metadata comments on routes                                                       | `true`          | `true`,`false`                          | `true`   |
+| `framework`        | Generates different route maps depending on the framework. `null` will generate only the named routes | `'routemaster'` | `'routemaster'`,`null`                  | `true`   |
+| `outputDir`        | Overwrites the default output directory of `rouets.g.dart`                                            | `lib/src`       | Any valid path relative to project root | `true`   |
 
 ## Features
 
@@ -102,7 +107,11 @@ Each route group has its own 404-page by default the routemaster one is used. Th
 
 ## Templates
 
-### template.dart
+### Routemaster
+
+These templates are specific to the routemaster builder
+
+#### template.dart
 
 ```dart
 RouteSettings guardTemplate(RouteData routeData, Widget child) {
@@ -110,7 +119,7 @@ RouteSettings guardTemplate(RouteData routeData, Widget child) {
 }
 ```
 
-### 404.dart
+#### 404.dart
 
 ```dart
 RouteSettings unknownRoute(String path) {
