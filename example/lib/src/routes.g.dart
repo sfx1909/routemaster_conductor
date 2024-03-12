@@ -30,7 +30,7 @@ import 'package:example/src/page/page.dart' as _i14;
 import 'package:example/src/page/(tabs)/one/page.dart' as _i15;
 import 'package:example/src/page/(tabs)/one/template.dart' as _i16;
 import 'package:example/src/page/(tabs)/page.dart' as _i17;
-import 'package:example/src/page/(tabs)/template.dart' as _i18;
+import 'package:example/src/page/(tabs)/nested.dart' as _i18;
 import 'package:example/src/page/(tabs)/two/page.dart' as _i19;
 
 /// A representation of a named route.
@@ -242,7 +242,7 @@ _i1.RouteMap routeMap = _i1.RouteMap(routes: {
 _i1.RouteMap tabsRouteMap = _i1.RouteMap(routes: {
   tabsOneRoute.path: (routeData) =>
       _i16.singlePageTemplate(routeData, _i15.OnePage()),
-  tabsTabsRoute.path: (routeData) =>
-      _i18.tabTemplate(routeData, _i17.TabsPage()),
-  tabsTwoRoute.path: (routeData) => _i18.tabTemplate(routeData, _i19.TwoPage())
+  tabsTabsRoute.path: (routeData) => _i18.tab(routeData, _i17.TabsPage()),
+  tabsTwoRoute.path: (routeData) =>
+      _i3.MaterialPage(child: _i19.TwoPage(), name: 'tabs_two_page')
 }, onUnknownRoute: _i7.unknownRoute);

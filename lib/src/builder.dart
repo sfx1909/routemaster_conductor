@@ -82,6 +82,18 @@ abstract class RouteBuilder extends Builder {
         },
       );
 
+  Stream<RouteAsset<FunctionElement>> getNested(BuildStep buildStep) =>
+      getAssets<FunctionElement>(
+        buildStep: buildStep,
+        glob: Glob('**/{page,pages}/**{nested,tabs}.dart'),
+        test: (element) {
+          final returnType = element.returnType.element;
+          return returnType is ClassElement &&
+              element.isPublic &&
+              returnType.name == 'RouteSettings';
+        },
+      );
+
   Stream<Spec> generatePageRoutesFields(BuildStep buildStep) async* {
     final routeMetaComment =
         (options.config['routeMetaComment'] as bool?) ?? true;

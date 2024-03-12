@@ -1,3 +1,6 @@
+///The file based builders that are available and the code generators
+library builders;
+
 import 'package:build/build.dart';
 import 'package:recase/recase.dart';
 import 'package:routemaster_conductor/src/frameworks/generic.dart';

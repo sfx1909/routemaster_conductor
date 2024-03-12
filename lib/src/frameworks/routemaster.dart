@@ -21,6 +21,7 @@ class RoutemasterRouteBuilder extends RouteBuilder {
     final pages = await getPages(buildStep).toList();
     final allTemplates = await getTemplates(buildStep).toList();
     final allUnknowns = await getUnknowns(buildStep).toList();
+    final allNested = await getNested(buildStep).toList();
 
     final SplayTreeMap<String,
             List<String Function(String Function(Reference))>> groups =
@@ -36,6 +37,7 @@ class RoutemasterRouteBuilder extends RouteBuilder {
 
       final pageDir = page.route;
       final pageGroupPath = joinAll(['/', ...page.groups]);
+
       final templateAsset = allTemplates.where((templ) {
         final tempDir = templ.route;
         final tempGroupPath = joinAll(['/', ...templ.groups]);
@@ -54,9 +56,17 @@ class RoutemasterRouteBuilder extends RouteBuilder {
                 isWithin(unknownGroupPath, pageGroupPath));
       }).lastOrNull;
 
+      final nestedAsset = allNested.where((nested) {
+        final nestedDir = nested.route;
+        final nestedGroupPath = joinAll(['/', ...nested.groups]);
+
+        return pageDir == nestedDir && pageGroupPath == nestedGroupPath;
+      }).firstOrNull;
+
       groupUnknowns.putIfAbsent(groupName, () => unknownAsset);
 
       final templateFunction = templateAsset?.element;
+      final nestedFunction = nestedAsset?.element;
 
       String templatePage(String Function(Reference) ref, String pageString) {
         return "${ref.call(
@@ -86,8 +96,21 @@ class RoutemasterRouteBuilder extends RouteBuilder {
                 ).snakeCase}')";
       }
 
-      final pageTemplate =
-          (templateFunction != null ? templatePage : materialPage);
+      final pageTemplate = nestedFunction == null
+          ? (templateFunction != null ? templatePage : materialPage)
+          : (String Function(Reference) ref, String pageString) {
+              return "${ref.call(
+                refer(
+                  nestedFunction.name,
+                  Uri.parse('package:${nestedAsset!.id.package}'
+                          '/${nestedAsset.id.path.replaceFirst(
+                    'lib/',
+                    '',
+                  )}')
+                      .toString(),
+                ),
+              )}(routeData,$pageString)";
+            };
 
       final code = groups[groupName] ?? (List.empty(growable: true));
 
@@ -178,6 +201,18 @@ class RoutemasterRouteBuilder extends RouteBuilder {
   @override
   Stream<RouteAsset<FunctionElement>> getTemplates(BuildStep buildStep) {
     return super.getTemplates(buildStep).takeWhile((element) {
+      final parameters = element.element.parameters
+          .map((e) => e.type.element?.name)
+          .whereNotNull();
+      return parameters.length == 2 &&
+          parameters
+              .every((param) => param == 'RouteData' || param == 'Widget');
+    });
+  }
+
+  @override
+  Stream<RouteAsset<FunctionElement>> getNested(BuildStep buildStep) {
+    return super.getNested(buildStep).takeWhile((element) {
       final parameters = element.element.parameters
           .map((e) => e.type.element?.name)
           .whereNotNull();
